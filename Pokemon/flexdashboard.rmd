@@ -1,0 +1,155 @@
+---
+title: "FlexDashboard"
+author: "Ricardo"
+date: "11/8/2020"
+output:
+    flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+---
+
+````{r librerias}
+library(flexdashboard)
+library(readr)
+library(dplyr)
+library(DT)
+````
+
+````{r carga archivo}
+pokemon <- read_csv("pokemon/pokemon/pokemon.csv")
+````
+
+
+# Kpis {data-icon="fa-ruler"}
+
+##
+###
+````{r}
+valueBox(nrow(pokemon),caption="Total de Pokemones",
+         icon = "fa-paw")
+
+````
+
+###
+````{r} 
+
+valueBox(sum(pokemon$is_legendary),
+         caption = "Total de Legendarios",
+         icon = "fa-crown")
+````
+
+###
+````{r}
+
+valueBox(round(mean(pokemon$height_m,
+                    na.rm = TRUE),2),
+         caption = "Estatura promedio",
+         icon = "fa-weight-hanging")
+````
+
+###
+````{r head pokemon}
+DT::datatable(pokemon)
+````
+
+## {.tabset}
+### Fire
+````{r}
+pokemon_fire <- 
+  pokemon %>% 
+  filter(type1=="fire") %>% 
+  select(name,japanese_name,generation,is_legendary, abilities)
+
+DT::datatable(pokemon_fire)
+````
+
+### Water
+````{r}
+pokemon_water <- 
+  pokemon %>% 
+  filter(type1=="water") %>% 
+  select(name,japanese_name,generation,is_legendary, abilities)
+
+DT::datatable(pokemon_water)
+````
+
+### Electric
+````{r}
+pokemon_electric <- 
+  pokemon %>% 
+  filter(type1=="electric") %>% 
+  select(name,japanese_name,generation,is_legendary, abilities)
+
+DT::datatable(pokemon_electric)
+````
+
+##
+### Electric Pokemon average attack rating
+````{r}
+attack_metrics<- 
+pokemon %>%
+  group_by(type1) %>% 
+  summarise(avg_attack = mean(sp_attack,na.rm = TRUE) ) %>% 
+              mutate(avg_attack = round(avg_attack, 0) )
+
+gauge(attack_metrics %>% 
+        filter(type1 == "electric") %>% 
+        pull(avg_attack), min = min(pokemon$sp_attack),
+      max = max(pokemon$sp_attack),
+      symbol = "Att", 
+      gaugeSectors(success = c(100,194),
+                                   warning = c(50,100),
+                                   danger = c(0,50)))
+``` 
+
+### Water Pokemon average attack rating
+````{r}
+attack_metrics<- 
+pokemon %>%
+  group_by(type1) %>% 
+  summarise(avg_attack = mean(sp_attack,na.rm = TRUE) ) %>% 
+              mutate(avg_attack = round(avg_attack, 0) )
+
+gauge(attack_metrics %>% 
+        filter(type1 == "water") %>% 
+        pull(avg_attack), min = min(pokemon$sp_attack),
+      max = max(pokemon$sp_attack),
+      symbol = "Att", 
+      gaugeSectors(success = c(100,194),
+                                   warning = c(50,100),
+                                   danger = c(0,50)))
+
+
+``` 
+
+### Water Other Pokemon average attack rating
+````{r}
+gauge(150, min = min(pokemon$sp_attack),
+      max = max(pokemon$sp_attack),
+      symbol = "Att", 
+      gaugeSectors(success = c(100,194),
+                                   warning = c(50,100),
+                                   danger = c(0,50)))
+
+
+``` 
+
+### Guia
+```
+Como hacer divisiones entre columnas y filas
+2 numerales = filas
+3 numerales = columnas
+## {data-height=50}
+
+### Columna 1.1 {data-width=4; data-padding=15}
+
+### Coulmna 1.2 {data-width=8}
+
+## {data-height=50}
+
+### Columna 2.1
+
+### Columna 2.2
+
+### Columna 2.3
+```
