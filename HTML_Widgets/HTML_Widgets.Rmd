@@ -1,0 +1,86 @@
+---
+title: "HTML_Widgets"
+author: "Ricardo"
+date: "8/13/2020"
+output:
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    verticaul_layout: fill
+---
+
+```{r librerias}
+library(flexdashboard)
+library(readr)
+library(dplyr)
+library(DT)
+library(leaflet)
+library(crosstalk)
+```
+
+```{r dataset}
+earthquakedata <- read_csv("earthquakedata.csv")
+```
+
+# Leaflet
+##
+###
+
+```{r}
+earthquakedata %>% 
+  filter(yr == 1995) %>% 
+  DT::datatable()
+```
+
+###
+
+```{r}
+earthquakedata %>% 
+  filter(yr == 1995) %>% 
+  leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(lng = ~lon, 
+             lat = ~lat, 
+             label = ~mag)
+```
+
+# crosstalk
+
+```{r}
+data_shared <- SharedData$new(earthquakedata %>% 
+  filter(yr>1999) ) 
+  
+```
+
+
+## 
+###
+
+```{r}
+filter_slider("mag", "Magnitud", 
+              data_shared, 
+              step = 0.1,
+              width = 250,
+              column = ~mag)
+
+filter_select("yr", "Year", 
+              data_shared,
+              group = ~yr,
+              multiple = FALSE)
+```
+
+
+```{r}
+data_shared %>% 
+  DT::datatable()
+```
+
+###
+```{r}
+data_shared %>% 
+  leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(lng = ~lon, 
+             lat = ~lat, 
+             label = ~mag)
+```
+
