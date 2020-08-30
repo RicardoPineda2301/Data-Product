@@ -1,7 +1,3 @@
 # Parcial 1 | Data Product
 
-## Contenido:
-
-- Folder que contiene la data
-
-- 
+Se realizó un repositorio específico para el parcial, el cual pueden encontrar (aquí)[https://github.com/RicardoPineda2301/Shiny-Docker]
