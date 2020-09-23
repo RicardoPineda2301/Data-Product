@@ -9,7 +9,7 @@ select yn in "Si" "No"; do
     esac
 done
 
-echo "Se instalará: conda, streamlit, pandas y numpy"
+echo "Se instalará: streamlit, pandas y numpy"
 
 
 conda create --name Tarea_Streamlit
