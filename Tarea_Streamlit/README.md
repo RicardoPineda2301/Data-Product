@@ -4,6 +4,10 @@
 
 - Uber Pickups
 
+### Correr los archivos
+
+Primero, clonar o descargar el repositorio, luego:
+
 #### Para Windows:
 
 Correr el archivo 'runme.bat' desde la terminal de Anaconda, 'Anaconda Prompt' 
