@@ -18,3 +18,18 @@ uvicorn main:app --reload
 
 - **-reload** Refresca automaticamente el servicio con cada cambio
 
+### Outputs
+
+Se puede utilizar el preferido
+
+**Swagger -UI**
+
+````
+http://127.0.0.1:8000/docs
+````
+
+**ReDoc**
+
+````
+http://127.0.0.1:8000/redoc
+````
