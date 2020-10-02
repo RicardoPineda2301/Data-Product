@@ -1,5 +1,9 @@
 # Fast API
 
+Es un framework moderno y de alto rendimiento para armar APIs en Python 3.6+
+
+Documentacion (aqui)[https://github.com/tiangolo/fastapi]
+
 ## Comandos
 
 ````
